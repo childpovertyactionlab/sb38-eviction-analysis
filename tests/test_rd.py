@@ -168,3 +168,40 @@ def test_event_study_finds_the_lasting_change(oc: pl.DataFrame) -> None:
     assert abs(post - LAW) < 0.03
     assert abs(pre) < 0.02
     assert es.get_column("pre_period_p").item(0) > 0.001
+
+
+def test_seasonal_difference_recovers_the_law_change(oc: pl.DataFrame) -> None:
+    from sb38.rd import seasonal
+
+    d = seasonal.difference(oc, "default_60")
+    assert abs(d["tau"] - LAW) < 3 * d["se"]
+    assert d["mde"] < 0.05
+
+    placebo = (
+        seasonal.placebo_season(oc).filter(pl.col("outcome") == "default_60").row(0, named=True)
+    )
+    assert abs(placebo["tau"]) < 3 * placebo["se"]
+
+
+def test_storm_exposure_covers_the_21_days_before_a_closure() -> None:
+    from sb38.rd import seasonal
+
+    closures = [
+        date(2025, 1, 9),
+        date(2025, 1, 10),
+        date(2026, 1, 26),
+        date(2026, 1, 27),
+        date(2026, 1, 28),
+    ]
+    assert seasonal.exposed(closures) == [(date(2026, 1, 5), date(2026, 1, 28))]
+
+
+def test_seasonal_checks_run() -> None:
+    from sb38.rd import seasonal
+
+    cases = make_cases(per_day=60)
+    v = seasonal.filing_volume(cases, closures=[date(2026, 1, 27)])
+    assert abs(v.get_column("tau").item()) < 3 * v.get_column("se").item()
+    oc_small = case_outcomes(cases, as_of=AS_OF)
+    t = seasonal.estimates(oc_small, PRIMARY)
+    assert t.get_column("p_holm").is_not_null().all()
