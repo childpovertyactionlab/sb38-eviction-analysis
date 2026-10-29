@@ -49,4 +49,4 @@ For the purpose of the analysis scripts, include every case filed in the specifi
 
 ## Test data
 
-`fixtures/synthetic_cases.csv` is 6,000 invented cases as fake test data (`python -m sb38.fixtures`). Its intended use is for testing an adapter script or running the package end to end before real data has been fitted.
+`fixtures/synthetic_cases.csv` is 3,000 invented cases as fake test data (`python -m sb38.fixtures`). Its intended use is for testing an adapter script or running the package end to end before real data has been fitted.
