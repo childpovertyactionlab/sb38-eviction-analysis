@@ -1,0 +1,162 @@
+county,topic,indicator,stat,measure,status,frame,year,month,value,numerator,denominator,denominator_source,denominator_vintage,carried_forward,note,data_as_of,pulled_on,sb38_version
+Dallas,“Squatters”,Summary disposition,# of cases that request summary disposition,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,jan_may,2024,,20184.0,20184,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,jan_may,2025,,19317.0,19317,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,jan_may,2026,,19024.0,19024,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2024,1,4427.0,4427,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2024,2,4245.0,4245,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2024,3,3641.0,3641,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2024,4,3941.0,3941,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2024,5,3930.0,3930,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2025,1,4478.0,4478,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2025,2,4030.0,4030,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2025,3,3298.0,3298,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2025,4,3505.0,3505,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2025,5,4006.0,4006,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2026,1,3249.0,3249,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2026,2,4571.0,4571,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2026,3,3808.0,3808,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2026,4,3557.0,3557,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,Number of filings,filings,computed,month,2026,5,3839.0,3839,,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,jan_may,2024,,40.75928917609047,20184,495200,acs1,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,jan_may,2025,,38.55896425555868,19317,500973,acs1,2025,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,jan_may,2026,,37.97410239673595,19024,500973,acs1,2025,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,1,8.939822294022617,4427,495200,acs1,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,2,8.572294022617125,4245,495200,acs1,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,3,7.352584814216478,3641,495200,acs1,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,4,7.958400646203553,3941,495200,acs1,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,5,7.936187399030695,3930,495200,acs1,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,1,8.938605473748087,4478,500973,acs1,2025,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,2,8.044345703261454,4030,500973,acs1,2025,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,3,6.5831891139841865,3298,500973,acs1,2025,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,4,6.9963850347224295,3505,500973,acs1,2025,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,5,7.996438929842526,4006,500973,acs1,2025,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,1,6.485379451587211,3249,500973,acs1,2025,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,2,9.124244220746428,4571,500973,acs1,2025,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,3,7.601208049136381,3808,500973,acs1,2025,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,4,7.100183043796771,3557,500973,acs1,2025,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,5,7.6630876314691605,3839,500973,acs1,2025,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,jan_may,2024,,41.71747694419068,20184,483826,acs5,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,jan_may,2025,,39.92551041076751,19317,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,jan_may,2026,,39.31992079797283,19024,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,1,9.1499836718159,4427,483826,acs5,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,2,8.773815379909307,4245,483826,acs5,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,3,7.52543269687863,3641,483826,acs5,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,4,8.145490320900489,3941,483826,acs5,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2024,5,8.122754874686354,3930,483826,acs5,2024,false,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,1,9.255393467899617,4478,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,2,8.329440749360307,4030,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,3,6.816500146746971,3298,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,4,7.244339907322054,3505,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2025,5,8.279836139438558,4006,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,1,6.715224068156735,3249,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,2,9.447611331346392,4571,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,3,7.870598107584132,3808,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,4,7.351816562152509,3557,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Filing trends,Filing records,filing rate,filing_rate,computed,month,2026,5,7.934670728733056,3839,483826,acs5,2024,true,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Service of eviction notice,"Unclear. Likely timestamps in court records and/or information from eviction petition scans, constable records, etc.",Average length of time from eviction filing to service of eviction notice,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Service of eviction notice,"Unclear. Likely timestamps in court records and/or information from eviction petition scans, constable records, etc.",Median length of time from eviction filing to service of eviction notice,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Service of eviction notice,"Unclear. Likely timestamps in court records and/or information from eviction petition scans, constable records, etc.",Share of eviction notices served by non-constable,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,jan_may,2024,,0.3424265259984928,6816,19905,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,jan_may,2025,,0.3339806844425782,6363,19052,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,jan_may,2026,,0.3244937319189971,6057,18666,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2024,1,0.3357044515832951,1463,4358,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2024,2,0.33053691275167785,1379,4172,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2024,3,0.3256331756192597,1170,3593,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2024,4,0.35285053929121724,1374,3894,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2024,5,0.367798353909465,1430,3888,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2025,1,0.32987598647125144,1463,4435,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2025,2,0.30941028858218317,1233,3985,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2025,3,0.331884507916796,1069,3221,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2025,4,0.34934876989869756,1207,3455,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2025,5,0.35161779575328617,1391,3956,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2026,1,0.32700093428838367,1050,3211,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2026,2,0.3202396804260985,1443,4506,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2026,3,0.32102728731942215,1200,3738,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2026,4,0.31857142857142856,1115,3500,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Default rate,Judgment field,Defaults as share of cases with outcomes,default_rate,computed,month,2026,5,0.33656696308272704,1249,3711,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,jan_may,2024,,21.115956591639872,,19904,,,,"1 disposition(s) dated before filing, excluded",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,jan_may,2025,,22.61568339281965,,19052,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,jan_may,2026,,23.42448432895794,,18665,,,,"1 disposition(s) dated before filing, excluded",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2024,1,22.944227679596054,,4357,,,,"1 disposition(s) dated before filing, excluded",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2024,2,20.494007670182167,,4172,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2024,3,20.05204564430838,,3593,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2024,4,20.750385208012325,,3894,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2024,5,21.083847736625515,,3888,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2025,1,23.677564825253665,,4435,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2025,2,22.10414052697616,,3985,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2025,3,22.65942253958398,,3221,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2025,4,20.959768451519537,,3455,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2025,5,23.351112234580384,,3956,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2026,1,25.54998442852694,,3211,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2026,2,22.567021748779407,,4506,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2026,3,24.601016858442602,,3737,,,,"1 disposition(s) dated before filing, excluded",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2026,4,22.940571428571428,,3500,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Average length of time from filing to judgment,mean_days_any_disposition,computed,month,2026,5,21.8981406628941,,3711,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,jan_may,2024,,18.0,,19904,,,,"1 disposition(s) dated before filing, excluded",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,jan_may,2025,,20.0,,19052,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,jan_may,2026,,21.0,,18665,,,,"1 disposition(s) dated before filing, excluded",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2024,1,19.0,,4357,,,,"1 disposition(s) dated before filing, excluded",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2024,2,18.0,,4172,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2024,3,16.0,,3593,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2024,4,17.0,,3894,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2024,5,17.0,,3888,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2025,1,21.0,,4435,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2025,2,19.0,,3985,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2025,3,20.0,,3221,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2025,4,19.0,,3455,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2025,5,20.0,,3956,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2026,1,21.0,,3211,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2026,2,21.0,,4506,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2026,3,22.0,,3737,,,,"1 disposition(s) dated before filing, excluded",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2026,4,20.0,,3500,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Median case length from filing to judgment,median_days_any_disposition,computed,month,2026,5,20.0,,3711,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,jan_may,2024,,0.8877768418966457,17918,20183,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,jan_may,2025,,0.8246622146296009,15930,19317,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,jan_may,2026,,0.8399306103138307,15978,19023,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2024,1,0.8854496159060099,3919,4426,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2024,2,0.9067137809187279,3849,4245,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2024,3,0.9107388080197748,3316,3641,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2024,4,0.8825171276325806,3478,3941,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2024,5,0.8539440203562341,3356,3930,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2025,1,0.8517195176418044,3814,4478,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2025,2,0.8161290322580645,3289,4030,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2025,3,0.7762280169799879,2560,3298,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2025,4,0.8450784593437946,2962,3505,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2025,5,0.8250124812780829,3305,4006,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2026,1,0.7463835026161896,2425,3249,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2026,2,0.8630496609057099,3945,4571,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2026,3,0.8408195429472025,3201,3807,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2026,4,0.8678661793646332,3087,3557,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 30 days,resolved_within_30_days,computed,month,2026,5,0.8648085438916384,3320,3839,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,jan_may,2024,,0.9702720110984492,19583,20183,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,jan_may,2025,,0.9732360097323601,18800,19317,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,jan_may,2026,,0.9594701151237975,18252,19023,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2024,1,0.9694984184365115,4291,4426,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2024,2,0.9705535924617197,4120,4245,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2024,3,0.9662180719582533,3518,3641,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2024,4,0.9751332149200711,3843,3941,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2024,5,0.9697201017811705,3811,3930,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2025,1,0.9799017418490398,4388,4478,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2025,2,0.9727047146401985,3920,4030,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2025,3,0.9675560946027896,3191,3298,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2025,4,0.9714693295292439,3405,3505,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2025,5,0.9725411882176734,3896,4006,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2026,1,0.9609110495537089,3122,3249,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2026,2,0.9639028658936776,4406,4571,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2026,3,0.9592855266614132,3652,3807,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2026,4,0.9617655327523194,3421,3557,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Case length until judgment,Filing and judgment timestamps,Share of cases resolved within 60 days,resolved_within_60_days,computed,month,2026,5,0.9510289137796301,3651,3839,,,,"",2026-08-26,2026-10-29,0.1.0
+Dallas,Immediate possession bonds,Unclear,Cases where an immediate possession bond is filed as a share of all cases with case outcomes,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Writ service,Timestamps for judgment + various writ stages. Possibly scrapes of scanned records (for non-constable service.),Average length of time from judgment to writ issuance,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Writ service,Timestamps for judgment + various writ stages. Possibly scrapes of scanned records (for non-constable service.),Median length of time from judgment to writ issuance,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Writ service,Timestamps for judgment + various writ stages. Possibly scrapes of scanned records (for non-constable service.),Average length of time from judgment to writ execution,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Writ service,Timestamps for judgment + various writ stages. Possibly scrapes of scanned records (for non-constable service.),Median length of time from judgment to writ execution,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Writ service,Timestamps for judgment + various writ stages. Possibly scrapes of scanned records (for non-constable service.),Average length of time from writ issuance to writ execution,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Writ service,Timestamps for judgment + various writ stages. Possibly scrapes of scanned records (for non-constable service.),median length of time from writ issuance to writ execution,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Writ service,Timestamps for judgment + various writ stages. Possibly scrapes of scanned records (for non-constable service.),Number and share of all cases where writ execution is recorded,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Writ service,Timestamps for judgment + various writ stages. Possibly scrapes of scanned records (for non-constable service.),"Number of cases with writ service performed by non-constables, and as a share of all cases where writs have been issued.",,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Appeals,Unclear,Number and share of cases appealed,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Appeals,Unclear,Average/median length of time from filing to judgment in appeals court,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Appeals,Unclear,Average/median length of time from judgment in JP court to judgment in appeals court,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0
+Dallas,Notice to pay rent or vacate,Unclear,#/% of nonpayment of rent cases that deliver notice to pay rent or vacate,,not computed,,,,,,,,,,,2026-08-26,2026-10-29,0.1.0

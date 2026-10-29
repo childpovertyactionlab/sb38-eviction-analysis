@@ -64,7 +64,9 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("path", help="case table (CSV or parquet) in the schema")
     m.add_argument("--as-of", required=True, help="date the data were pulled, YYYY-MM-DD")
     m.add_argument("--county", required=True, help="county name, written on every row")
-    m.add_argument("--out", required=True, help="where to write the CSV (outside the repository)")
+    m.add_argument(
+        "--out", required=True, help="where to write the results CSV, e.g. results/<county>.csv"
+    )
     m.add_argument("--census-state", help="state FIPS for the filing-rate denominator, e.g. 48")
     m.add_argument("--census-county", help="county FIPS for the denominator, e.g. 113")
     args = parser.parse_args(argv)

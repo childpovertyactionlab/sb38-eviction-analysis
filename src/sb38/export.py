@@ -5,8 +5,8 @@ topic, indicator and stat text beside the computed value, so a county's file rea
 against the document and two counties' files stack into one comparison. A stat with nothing
 behind it yet still gets a row, marked not computed.
 
-Results are aggregate, and they are written wherever the caller says, never into a tracked
-path in this repository.
+Results are analysis output, not data: aggregates computed from the case table. They may be
+kept in the repository under ``results/``; the case table itself never is.
 """
 
 from __future__ import annotations
@@ -39,8 +39,6 @@ COLUMNS = [
     "pulled_on",
     "sb38_version",
 ]
-
-REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _rates(cases: pl.DataFrame, renters: pl.DataFrame) -> pl.DataFrame:
@@ -123,17 +121,14 @@ def results(
 
 
 def write(table: pl.DataFrame, path: str | Path) -> Path:
-    """Write the results CSV, refusing any tracked path inside this repository.
+    """Write a results table to CSV.
 
-    Only ``outputs/``, which is ignored, is allowed inside the repository. Results are
-    aggregates, but they are still data, and data doesn't persist in the repo.
+    Only a table with exactly the results columns is written. That keeps the case table, which
+    is data rather than analysis output, from ever going out through here.
     """
-    path = Path(path).resolve()
-    inside = REPO_ROOT in path.parents
-    if (REPO_ROOT / ".git").exists() and inside and (REPO_ROOT / "outputs") not in path.parents:
-        raise ValueError(
-            f"{path} is inside the repository. Write results outside it, or under outputs/."
-        )
+    if table.columns != COLUMNS:
+        raise ValueError("Only a results table from export.results() can be written here.")
+    path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     table.write_csv(path)
     return path

@@ -1,4 +1,4 @@
-"""The results CSV: one to one with the scoping document, and never written into the repo."""
+"""The results CSV: one to one with the scoping document, and holding only analysis results."""
 
 from __future__ import annotations
 
@@ -69,11 +69,12 @@ def test_filing_rate_needs_denominators(cases: pl.DataFrame) -> None:
     assert carried.all()
 
 
-def test_write_refuses_tracked_paths_in_the_repo(cases: pl.DataFrame, tmp_path: Path) -> None:
+def test_write_accepts_results_only(cases: pl.DataFrame, tmp_path: Path) -> None:
+    """Analysis results can be written anywhere; the case table can't go out through here."""
     t = export.results(cases, as_of=AS_OF, county="Synthetic")
-    with pytest.raises(ValueError, match="inside the repository"):
-        export.write(t, export.REPO_ROOT / "results.csv")
     assert export.write(t, tmp_path / "out" / "results.csv").exists()
+    with pytest.raises(ValueError, match="Only a results table"):
+        export.write(cases, tmp_path / "cases.csv")
 
 
 def test_the_command_end_to_end(tmp_path: Path) -> None:

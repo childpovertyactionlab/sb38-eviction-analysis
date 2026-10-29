@@ -11,7 +11,8 @@ dist/
 
 # Case-level data never goes in this repository. Every county's cases are court records about
 # people. Pull them into memory from your own source, or keep any local extract outside the
-# repository. Only synthetic fixtures and aggregate configuration are committed.
+# repository. Only synthetic fixtures, aggregate configuration and analysis results
+# (results/) are committed.
 data/
 outputs/
 *.parquet
@@ -20,6 +21,7 @@ outputs/
 *.csv
 !fixtures/*.csv
 !config/**/*.csv
+!results/*.csv
 
 .env
 .DS_Store
