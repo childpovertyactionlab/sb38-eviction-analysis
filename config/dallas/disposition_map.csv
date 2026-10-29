@@ -1,0 +1,29 @@
+outcome_category,judgment_type,disposition_class,note
+DEFAULT_FOR_LANDLORD,DEFAULT JUDGMENT,default_judgment,Tenant did not appear; judgment for the landlord.
+JUDGMENT_PARTY_UNKNOWN,DEFAULT JUDGMENT,default_judgment,Default with no party recorded. Counted as a default: a default is by definition the tenant's non-appearance. Two cases in Jan-May 2024-2026.
+DISMISSED_WANT_OF_PROSECUTION,DEFAULT JUDGMENT,dismissed,"Recorded as a default for the tenant. Local practitioners and a justice court clerk treat this as the landlord failing to appear, so it is a dismissal for want of prosecution, not a default."
+DISMISSED_WANT_OF_PROSECUTION,DISMISSED FOR WANT OF PROSECUTION,dismissed,
+DISMISSED_WITHOUT_PREJUDICE,DISMISSED WITHOUT PREJUDICE,dismissed,
+DISMISSED_WITH_PREJUDICE,DISMISSED WITH PREJUDICE,dismissed,
+JUDGMENT_FOR_LANDLORD,FINAL JUDGMENT,other_judgment,
+JUDGMENT_FOR_LANDLORD,JUDGMENT NON-JURY,other_judgment,
+JUDGMENT_FOR_LANDLORD,JUDGMENT JURY TRIAL,other_judgment,
+JUDGMENT_FOR_TENANT,FINAL JUDGMENT,other_judgment,
+JUDGMENT_FOR_TENANT,JUDGMENT NON-JURY,other_judgment,
+JUDGMENT_FOR_TENANT,JUDGMENT JURY TRIAL,other_judgment,
+JUDGMENT_PARTY_UNKNOWN,FINAL JUDGMENT,other_judgment,
+JUDGMENT_PARTY_UNKNOWN,JUDGMENT NON-JURY,other_judgment,
+JUDGMENT_PARTY_UNKNOWN,JUDGMENT JURY TRIAL,other_judgment,
+AGREED,AGREED JUDGMENT,other_judgment,
+NONSUIT,NONSUIT/DISMISSAL BY PLAINTIFF/PETITIONER,nonsuit,Withdrawn by the landlord.
+POST_JUDGMENT,RELEASE OF JUDGMENT,other,Records a later event rather than how the case ended.
+POST_JUDGMENT,JUDGMENT SET ASIDE,other,Records a later event rather than how the case ended.
+TRANSFERRED,FOREIGN JUDGMENT,other,
+TRANSFERRED,ORDER - CHANGE VENUE TRANSFER,other,
+LEGACY_CONVERSION,CONVERSION - JUDGMENT,other,"A placeholder from the county's 2017-2022 system migration, not a court outcome."
+NO_DISPOSITION,,,An outcome record exists but holds no disposition. Treated as no recorded outcome yet.
+OTHER_REVIEW,FOUND TRUE,other_judgment,The court found the complaint true: a judgment entered.
+OTHER_REVIEW,FOUND NOT TRUE,other_judgment,The court found the complaint not true: a judgment entered.
+OTHER_REVIEW,POSSESSION ONLY,other_judgment,A judgment for possession without money damages.
+OTHER_REVIEW,SUMMARY JUDGMENT,other_judgment,A judgment on a motion without trial. May be how a granted SB 38 summary disposition is recorded; not yet confirmed with the court.
+TRANSFERRED,TRANSFERRED,other,
