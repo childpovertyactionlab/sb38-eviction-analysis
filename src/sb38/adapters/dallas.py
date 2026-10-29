@@ -155,3 +155,27 @@ def load(start: date = date(2024, 1, 1), end: date = date(2026, 5, 31)) -> Pull:
         .sort("year", "orr_status")
     )
     return Pull(cases=cases, as_of=as_of, status_counts=status)
+
+
+STATE_FIPS, COUNTY_FIPS = "48", "113"
+
+
+def results(start: date = date(2024, 1, 1), end: date = date(2026, 5, 31)) -> pl.DataFrame:
+    """The results table for Dallas County: pull, fetch renter households, compute."""
+    from sb38 import denominators, export, measures
+
+    pull = load(start, end)
+    renters = denominators.fetch(STATE_FIPS, COUNTY_FIPS, measures.COHORT_YEARS)
+    return export.results(pull.cases, as_of=pull.as_of, county="Dallas", renters=renters)
+
+
+if __name__ == "__main__":
+    import argparse
+
+    from sb38 import export
+
+    parser = argparse.ArgumentParser(prog="python -m sb38.adapters.dallas")
+    parser.add_argument("--out", required=True, help="where to write the results CSV")
+    args = parser.parse_args()
+    table = results()
+    print(f"wrote {export.write(table, args.out)}: {table.height:,} rows")

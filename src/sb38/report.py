@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import polars as pl
 
+from sb38 import scope
 from sb38.measures import BENCHMARKS, TREATED
 
 MONTH_NAMES = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May"}
@@ -58,3 +59,34 @@ def denominators_used(measures: pl.DataFrame, measure: str) -> pl.DataFrame:
         .select("year", "numerator", "denominator", "value", "note")
         .sort("year")
     )
+
+
+def topic(results: pl.DataFrame, t: scope.Topic) -> None:
+    """Print one scoping-document topic: its own wording, then each stat's table.
+
+    Only the scoping document's text and the computed figures are printed, so the notebook
+    reads one to one with the document.
+    """
+    print(f"Topic: {t.name}")
+    print(f"Indicator: {t.indicator}")
+    print(f"Stat(s): {'; '.join(s.text for s in t.stats)}")
+    for s in t.stats:
+        rows = results.filter((pl.col("stat") == s.text) & (pl.col("status") == "computed"))
+        print(f"\n{s.text}")
+        if rows.is_empty():
+            print(scope.NOT_COMPUTED)
+            continue
+        if s.measure == "filing_rate":
+            for source in rows.get_column("denominator_source").unique().sort().to_list():
+                sub = rows.filter(pl.col("denominator_source") == source)
+                carried = sub.filter(pl.col("carried_forward")).get_column("year").unique().sort()
+                label = "ACS 1-year" if source == "acs1" else "ACS 5-year"
+                suffix = (
+                    f" (estimate carried forward for {', '.join(map(str, carried.to_list()))})"
+                    if carried.len()
+                    else ""
+                )
+                print(f"{label}{suffix}")
+                print(table(sub, s.measure))
+        else:
+            print(table(rows, s.measure, percent=s.percent))
