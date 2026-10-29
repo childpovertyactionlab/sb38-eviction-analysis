@@ -30,6 +30,9 @@ To check data fit, export one row per case with the schema's column names and ru
 |---|---|
 | `docs/methods.md` | Methods explainer |
 | `docs/schema.md` | Intended case table schema |
+| `config/` | Per-county settings, such as the Dallas disposition map |
+| `notebooks/` | Results notebooks, committed with outputs |
+| `results/` | Per-county analysis results, as CSV |
 | `src/sb38/` | Implemented codebase |
 | `fixtures/` | Invented test data from a seeded generator |
 | `tests/` | Tests, runnable without any real data |
