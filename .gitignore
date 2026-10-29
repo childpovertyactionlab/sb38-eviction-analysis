@@ -1,0 +1,25 @@
+# Python and environment
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Case-level data never goes in this repository. Every county's cases are court records about
+# people. Pull them into memory from your own source, or keep any local extract outside the
+# repository. Only synthetic fixtures and aggregate configuration are committed.
+data/
+outputs/
+*.parquet
+*.xlsx
+*.xls
+*.csv
+!fixtures/*.csv
+!config/**/*.csv
+
+.env
+.DS_Store
