@@ -49,3 +49,44 @@ def test_filing_rates_per_thousand_with_range() -> None:
     r = d.filing_rates(filings, dens).row(0, named=True)
     assert r["rate_per_1000"] == pytest.approx(50.0)
     assert r["rate_low"] < 50.0 < r["rate_high"]
+
+
+def test_a_rejected_key_stops_the_run(monkeypatch) -> None:
+    """The bug this guards against: a bad key used to leave the filing rate quietly blank."""
+
+    class Resp:
+        def __init__(self, body: bytes) -> None:
+            self.body = body
+
+        def read(self) -> bytes:
+            return self.body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a) -> None:
+            return None
+
+    monkeypatch.setenv("CENSUS_API_KEY", "not-a-key")
+    monkeypatch.setattr(d.time, "sleep", lambda s: None)
+    monkeypatch.setattr(
+        d.urllib.request, "urlopen", lambda url, timeout: Resp(b"<html>Invalid Key</html>")
+    )
+    with pytest.raises(RuntimeError, match="rejected the key"):
+        d.fetch("48", "113", [2025])
+
+
+def test_getting_nothing_back_stops_the_run() -> None:
+    def all_missing(url: str):
+        raise urllib.error.HTTPError(url, 404, "not found", None, None)
+
+    with pytest.raises(RuntimeError, match="No renter-household estimates"):
+        d.fetch("48", "113", [2030], get=all_missing)
+
+
+def test_other_http_errors_are_not_mistaken_for_unpublished_years() -> None:
+    def server_error(url: str):
+        raise urllib.error.HTTPError(url, 500, "server error", None, None)
+
+    with pytest.raises(urllib.error.HTTPError):
+        d.fetch("48", "113", [2025], get=server_error)

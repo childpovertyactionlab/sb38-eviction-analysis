@@ -39,7 +39,16 @@ def _get_json(url: str) -> list[list[str]]:
     with urllib.request.urlopen(full, timeout=120) as resp:  # noqa: S310 - fixed https host
         body = resp.read()
     time.sleep(PAUSE_SECONDS)
-    return json.loads(body)
+    try:
+        return json.loads(body)
+    except json.JSONDecodeError:
+        # The API answers a bad or missing key with an HTML page, not JSON. Fail loudly:
+        # skipping it would leave the filing rate quietly uncomputed.
+        if b"key" in body.lower():
+            raise RuntimeError(
+                "The Census API rejected the key. Check that CENSUS_API_KEY holds only the key."
+            ) from None
+        raise RuntimeError(f"The Census API returned something other than JSON for {url}") from None
 
 
 def acs_table(year: int, dataset: str, state: str, county: str, *, get: Getter = _get_json) -> dict:
@@ -68,14 +77,21 @@ def fetch(
     sources: Iterable[str] = SOURCES,
     get: Getter = _get_json,
 ) -> pl.DataFrame:
-    """Every published estimate for the given years. A year not yet published is skipped."""
+    """Every published estimate for the given years.
+
+    A year the Census Bureau hasn't published yet answers 404 and is skipped. Anything else,
+    including a rejected key, stops the run, and so does getting nothing back at all.
+    """
     rows = []
     for source in sources:
         for year in years:
             try:
                 rows.append(acs_table(year, source, state, county, get=get))
-            except (urllib.error.HTTPError, json.JSONDecodeError, ValueError):
-                continue
+            except urllib.error.HTTPError as exc:
+                if exc.code != 404:
+                    raise
+    if not rows:
+        raise RuntimeError(f"No renter-household estimates returned for {state}{county}.")
     return pl.DataFrame(
         rows,
         schema={

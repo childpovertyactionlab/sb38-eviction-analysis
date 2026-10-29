@@ -76,6 +76,8 @@ def results(
     """
     m = measures.all_measures(cases, as_of=as_of)
     rates = _rates(cases, renters) if renters is not None else pl.DataFrame()
+    if renters is not None and rates.is_empty():
+        raise ValueError("Renter-household estimates were supplied but no filing rate came out.")
 
     parts = []
     for topic in scope.TOPICS:
