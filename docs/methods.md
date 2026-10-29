@@ -78,7 +78,7 @@ Filings reports the number of cases in the cohort, reported as the Jan–May tot
 
 ### Filing rate
 
-Filing rate reports filings per 1,000 renter-occupied households in the county.
+Filing rate reports filings per 1,000 renter-occupied households in the county, using the Census Bureau's American Community Survey (ACS) 1-year estimate of renter-occupied households (table B25003).
 
 - Year-matched: each year's filings are divided by renter households estimated by the Census Bureau for that same calendar year. Where the matching estimate isn't published yet (2026, as of late 2026), the most recent estimate will be used and labelled as such.
 - Not annualised: a Jan–May rate is five months of filings over an annual household count, and a monthly rate is one month's.
