@@ -166,7 +166,9 @@ def results(start: date = date(2024, 1, 1), end: date = date(2026, 5, 31)) -> pl
 
     pull = load(start, end)
     renters = denominators.fetch(STATE_FIPS, COUNTY_FIPS, measures.COHORT_YEARS)
-    return export.results(pull.cases, as_of=pull.as_of, county="Dallas", renters=renters)
+    return export.results(
+        pull.cases, as_of=pull.as_of, county="Dallas", renters=renters, pulled_on=date.today()
+    )
 
 
 if __name__ == "__main__":

@@ -94,3 +94,10 @@ def test_the_command_end_to_end(tmp_path: Path) -> None:
     back = pl.read_csv(out)
     assert back.columns == export.COLUMNS
     assert set(back.get_column("county")) == {"Synthetic"}
+
+
+def test_pull_date_defaults_to_the_data_date(cases: pl.DataFrame) -> None:
+    t = export.results(cases, as_of=AS_OF, county="Synthetic")
+    assert set(t.get_column("pulled_on")) == {AS_OF}
+    later = export.results(cases, as_of=AS_OF, county="Synthetic", pulled_on=date(2026, 10, 29))
+    assert set(later.get_column("pulled_on")) == {date(2026, 10, 29)}

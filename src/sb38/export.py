@@ -36,6 +36,7 @@ COLUMNS = [
     "carried_forward",
     "note",
     "data_as_of",
+    "pulled_on",
     "sb38_version",
 ]
 
@@ -68,11 +69,14 @@ def results(
     as_of: date,
     county: str,
     renters: pl.DataFrame | None = None,
+    pulled_on: date | None = None,
 ) -> pl.DataFrame:
     """Every scoping-document stat for one county's case table.
 
-    ``renters`` is a table of renter-household estimates (``denominators.fetch``). Without it,
-    the filing rate is marked not computed.
+    ``as_of`` is how current the outcome data are; ``pulled_on`` is when the case table was
+    pulled, which defaults to ``as_of``. They differ where filings refresh daily but outcomes
+    arrive in deliveries. ``renters`` is a table of renter-household estimates
+    (``denominators.fetch``). Without it, the filing rate is marked not computed.
     """
     m = measures.all_measures(cases, as_of=as_of)
     rates = _rates(cases, renters) if renters is not None else pl.DataFrame()
@@ -108,7 +112,9 @@ def results(
                 )
 
     out = pl.concat(parts, how="diagonal_relaxed").with_columns(
-        pl.lit(as_of).alias("data_as_of"), pl.lit(__version__).alias("sb38_version")
+        pl.lit(as_of).alias("data_as_of"),
+        pl.lit(pulled_on or as_of).alias("pulled_on"),
+        pl.lit(__version__).alias("sb38_version"),
     )
     for col in COLUMNS:
         if col not in out.columns:
