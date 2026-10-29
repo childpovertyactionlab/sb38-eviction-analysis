@@ -1,0 +1,28 @@
+# Install once: uv run pre-commit install
+# Run on everything: uv run pre-commit run --all-files
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.6
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: pytest-fast
+        name: pytest (fast)
+        entry: uv run pytest -x -q --no-header -m "not slow and not integration"
+        language: system
+        types: [python]
+        pass_filenames: false
