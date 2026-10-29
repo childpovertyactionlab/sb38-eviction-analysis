@@ -28,7 +28,9 @@ repos:
         pass_filenames: false
 
   # Notebooks are committed without outputs: results are data, and data doesn't persist here.
+  # One exception: the Dallas notebook keeps its outputs as starter numbers for partners.
   - repo: https://github.com/kynan/nbstripout
     rev: 0.7.1
     hooks:
       - id: nbstripout
+        exclude: ^notebooks/dallas-results\.ipynb$
