@@ -26,6 +26,7 @@ from sb38 import schema
 
 CONFIG_DIR = Path(__file__).resolve().parents[3] / "config" / "dallas"
 DISPOSITION_MAP = CONFIG_DIR / "disposition_map.csv"
+CLOSURES = CONFIG_DIR / "closures.csv"
 
 SQL = """
 SELECT
@@ -42,10 +43,30 @@ SELECT
     o.orr_last_delivery_date,
     f.writ_issued_dt,
     f.writ_served_dt,
-    f.appeal_date
+    f.appeal_date,
+    s.citation_served_date,
+    s.any_constable,
+    s.any_other_server
 FROM {gold}.housing.evictions_dallas_outcomes AS o
 LEFT JOIN {silver}.county.evictions_dallas_orr_case_final AS f
     ON f.case_number = o.case_number
+LEFT JOIN (
+    -- One row per case from the defendant-level service records in each defendant's latest
+    -- delivery. A server label naming a constable counts as constable. "OUT OF COUNTY" names no
+    -- agency, so it counts as neither.
+    SELECT
+        case_number,
+        min(citation_served_date) AS citation_served_date,
+        max(CASE WHEN upper(actual_server) LIKE '%CONST%' THEN 1 ELSE 0 END) AS any_constable,
+        max(CASE WHEN actual_server IS NOT NULL
+                  AND upper(actual_server) NOT LIKE '%CONST%'
+                  AND upper(trim(actual_server)) <> 'OUT OF COUNTY'
+            THEN 1 ELSE 0 END) AS any_other_server
+    FROM {silver}.county.evictions_dallas_orr_service_final
+    WHERE is_current
+    GROUP BY case_number
+) AS s
+    ON s.case_number = o.case_number
 WHERE o.date_filed BETWEEN :start AND :end
 """
 
@@ -122,6 +143,13 @@ def to_cases(raw: pl.DataFrame, mapping: pl.DataFrame | None = None) -> pl.DataF
         pl.col("writ_issued_dt").cast(pl.Date).alias("writ_issued_date"),
         pl.col("writ_served_dt").cast(pl.Date).alias("writ_executed_date"),
         pl.col("appeal_date").cast(pl.Date),
+        pl.col("citation_served_date").cast(pl.Date),
+        pl.when(pl.col("any_other_server") == 1)
+        .then(pl.lit("other"))
+        .when(pl.col("any_constable") == 1)
+        .then(pl.lit("constable"))
+        .otherwise(None)
+        .alias("citation_server_type"),
     ).sort("filed_date", "case_id")
 
 
@@ -160,15 +188,28 @@ def load(start: date = date(2024, 1, 1), end: date = date(2026, 5, 31)) -> Pull:
 STATE_FIPS, COUNTY_FIPS = "48", "113"
 
 
-def results(start: date = date(2024, 1, 1), end: date = date(2026, 5, 31)) -> pl.DataFrame:
-    """The results table for Dallas County: pull, fetch renter households, compute."""
+def results(
+    start: date = date(2024, 1, 1), end: date = date(2026, 5, 31), *, with_coverage: bool = False
+):
+    """The results table for Dallas County: pull, fetch renter households, compute.
+
+    With ``with_coverage``, also returns the coverage-by-court table.
+    """
     from sb38 import denominators, export, measures
 
     pull = load(start, end)
     renters = denominators.fetch(STATE_FIPS, COUNTY_FIPS, measures.COHORT_YEARS)
-    return export.results(
-        pull.cases, as_of=pull.as_of, county="Dallas", renters=renters, pulled_on=date.today()
+    table = export.results(
+        pull.cases,
+        as_of=pull.as_of,
+        county="Dallas",
+        renters=renters,
+        pulled_on=date.today(),
+        closures=pl.read_csv(CLOSURES, infer_schema=False),
     )
+    if with_coverage:
+        return table, export.coverage(pull.cases, as_of=pull.as_of, county="Dallas")
+    return table
 
 
 if __name__ == "__main__":
@@ -178,6 +219,11 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(prog="python -m sb38.adapters.dallas")
     parser.add_argument("--out", required=True, help="where to write the results CSV")
+    parser.add_argument(
+        "--coverage-out", help="where to write coverage by court (default: beside --out)"
+    )
     args = parser.parse_args()
-    table = results()
+    table, cov = results(with_coverage=True)
     print(f"wrote {export.write(table, args.out)}: {table.height:,} rows")
+    cov_out = args.coverage_out or str(args.out).removesuffix(".csv") + "-coverage.csv"
+    print(f"wrote {export.write(cov, cov_out)}: {cov.height:,} rows")

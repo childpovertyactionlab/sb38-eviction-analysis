@@ -32,6 +32,9 @@ def _raw(rows: list[dict]) -> pl.DataFrame:
         "writ_issued_dt": None,
         "writ_served_dt": None,
         "appeal_date": None,
+        "citation_served_date": None,
+        "any_constable": None,
+        "any_other_server": None,
     }
     return pl.DataFrame(
         [{**base, **r} for r in rows],
@@ -43,6 +46,9 @@ def _raw(rows: list[dict]) -> pl.DataFrame:
             "writ_issued_dt": pl.Date,
             "writ_served_dt": pl.Date,
             "appeal_date": pl.Date,
+            "citation_served_date": pl.Date,
+            "any_constable": pl.Int32,
+            "any_other_server": pl.Int32,
         },
     )
 
@@ -139,3 +145,15 @@ def test_live_pull_matches_the_reconciled_cohorts() -> None:
     got = dict(zip(f.get_column("year"), f.get_column("value"), strict=True))
     for year, expected in {2024: 20_184, 2025: 19_317, 2026: 19_024}.items():
         assert abs(got[year] - expected) / expected < 0.005, (year, got[year])
+
+
+def test_server_type_prefers_a_non_constable_server() -> None:
+    raw = _raw(
+        [
+            {"case_number": "S1", "any_constable": 1, "any_other_server": 0},
+            {"case_number": "S2", "any_constable": 1, "any_other_server": 1},
+            {"case_number": "S3", "any_constable": 0, "any_other_server": 0},
+        ]
+    )
+    got = dict(dallas.to_cases(raw).select("case_id", "citation_server_type").iter_rows())
+    assert got == {"S1": "constable", "S2": "other", "S3": None}
