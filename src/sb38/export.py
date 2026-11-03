@@ -86,7 +86,7 @@ def closure_notes(closures: pl.DataFrame) -> pl.DataFrame:
             ).alias("closure_note")
         )
         .group_by("year", "month")
-        .agg(pl.col("closure_note").sort().str.join("; "))
+        .agg(pl.col("closure_note").sort().str.join(" | "))
     )
 
 
@@ -185,7 +185,7 @@ def results(
                 .then(pl.col("note"))
                 .when(pl.col("note").is_null() | (pl.col("note") == ""))
                 .then(pl.col("closure_note"))
-                .otherwise(pl.format("{}; {}", pl.col("note"), pl.col("closure_note")))
+                .otherwise(pl.format("{} | {}", pl.col("note"), pl.col("closure_note")))
                 .alias("note")
             )
         )
