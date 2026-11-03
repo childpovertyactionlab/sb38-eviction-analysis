@@ -30,6 +30,7 @@ def difference(
     seasons: Sequence[int] = CUTOFF_YEARS,
     drop: Sequence[tuple[date, date]] = (),
     label: str = "main",
+    court_indicators: bool = True,
 ) -> dict:
     """The coefficient on "filed in the treated season, on or after January 1".
 
@@ -47,7 +48,8 @@ def difference(
         _cluster(),
     )
     df = estimate.to_pandas(s.select(outcome, "post", "week", "season", "court", "cluster"))
-    fit = smf.ols(f"{outcome} ~ post + C(week) + C(season) + C(court)", df).fit(
+    courts = " + C(court)" if court_indicators else ""
+    fit = smf.ols(f"{outcome} ~ post + C(week) + C(season){courts}", df).fit(
         cov_type="cluster", cov_kwds={"groups": df["cluster"]}
     )
     comparison = s.filter((pl.col("season") != treated) & (pl.col("r") >= 0))
@@ -158,11 +160,21 @@ def filing_volume(cases: pl.DataFrame, *, closures: Sequence[date] = ()) -> pl.D
 
 
 def composition(oc: pl.DataFrame, outcomes: Sequence[str] = PRIMARY) -> pl.DataFrame:
-    """The main estimate on number of defendants and on predicted-outcome indexes."""
-    rows = [difference(oc.filter(pl.col("defendant_count").is_not_null()), "defendant_count")]
-    for o in outcomes:
-        idx = checks.predicted_index(oc, o)
-        rows.append(difference(idx, f"predicted_{o}"))
+    """The main estimate on number of defendants and on predicted-outcome indexes.
+
+    Run with and without court indicators. With them, a predicted index built from court and
+    number of defendants varies only with defendants, so the run without them is the one that
+    would show a shift in court mix (deviation logged 2026-11-02).
+    """
+    with_defendants = oc.filter(pl.col("defendant_count").is_not_null())
+    rows = []
+    for courts, label in ((True, "with court indicators"), (False, "without court indicators")):
+        rows.append(
+            difference(with_defendants, "defendant_count", court_indicators=courts, label=label)
+        )
+        for o in outcomes:
+            idx = checks.predicted_index(oc, o)
+            rows.append(difference(idx, f"predicted_{o}", court_indicators=courts, label=label))
     return estimate._finish(rows)
 
 

@@ -151,4 +151,7 @@ running anything on Dallas data.
 
 ## Deviations
 
-None yet.
+- **2026-11-02, composition check.** With court indicators in the model, the predicted-outcome
+  index varies only with the number of defendants, so it repeated the defendant-count result.
+  It is also run without court indicators, so a shift in court mix would show. Both runs are
+  reported.
