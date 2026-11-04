@@ -173,13 +173,16 @@ def results(
         if col not in out.columns:
             out = out.with_columns(pl.lit(None).alias(col))
     if closures is not None and closures.height:
+        # A join doesn't promise to keep row order, so the original order is restored after it.
         out = (
             out.with_columns(pl.col("month").cast(pl.Int8), pl.col("year").cast(pl.Int32))
+            .with_row_index("_row")
             .join(
                 closure_notes(closures).with_columns(pl.col("year").cast(pl.Int32)),
                 on=["year", "month"],
                 how="left",
             )
+            .sort("_row")
             .with_columns(
                 pl.when(pl.col("closure_note").is_null())
                 .then(pl.col("note"))
