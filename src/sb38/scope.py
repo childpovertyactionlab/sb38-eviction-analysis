@@ -30,6 +30,7 @@ class Stat:
     text: str
     measure: str | None  # key in sb38.measures / sb38.export, or None if not computed
     percent: bool = False
+    count: str | None = None  # a count shown beside a share, for "number and share" stats
 
 
 @dataclass(frozen=True)
@@ -55,9 +56,20 @@ TOPICS: tuple[Topic, ...] = (
         "Unclear. Likely timestamps in court records and/or information from eviction petition "
         "scans, constable records, etc.",
         (
-            Stat("Average length of time from eviction filing to service of eviction notice", None),
-            Stat("Median length of time from eviction filing to service of eviction notice", None),
-            Stat("Share of eviction notices served by non-constable", None),
+            Stat(
+                "Average length of time from eviction filing to service of eviction notice",
+                "mean_days_to_service",
+            ),
+            Stat(
+                "Median length of time from eviction filing to service of eviction notice",
+                "median_days_to_service",
+            ),
+            Stat(
+                "Share of eviction notices served by non-constable",
+                "non_constable_service_share",
+                percent=True,
+                count="non_constable_service_count",
+            ),
         ),
     ),
     Topic(
@@ -91,13 +103,36 @@ TOPICS: tuple[Topic, ...] = (
         "Timestamps for judgment + various writ stages. Possibly scrapes of scanned records "
         "(for non-constable service.)",
         (
-            Stat("Average length of time from judgment to writ issuance", None),
-            Stat("Median length of time from judgment to writ issuance", None),
-            Stat("Average length of time from judgment to writ execution", None),
-            Stat("Median length of time from judgment to writ execution", None),
-            Stat("Average length of time from writ issuance to writ execution", None),
-            Stat("median length of time from writ issuance to writ execution", None),
-            Stat("Number and share of all cases where writ execution is recorded", None),
+            Stat(
+                "Average length of time from judgment to writ issuance",
+                "mean_days_judgment_to_writ_issued",
+            ),
+            Stat(
+                "Median length of time from judgment to writ issuance",
+                "median_days_judgment_to_writ_issued",
+            ),
+            Stat(
+                "Average length of time from judgment to writ execution",
+                "mean_days_judgment_to_writ_executed",
+            ),
+            Stat(
+                "Median length of time from judgment to writ execution",
+                "median_days_judgment_to_writ_executed",
+            ),
+            Stat(
+                "Average length of time from writ issuance to writ execution",
+                "mean_days_writ_issued_to_executed",
+            ),
+            Stat(
+                "median length of time from writ issuance to writ execution",
+                "median_days_writ_issued_to_executed",
+            ),
+            Stat(
+                "Number and share of all cases where writ execution is recorded",
+                "writ_executed_share",
+                percent=True,
+                count="writ_executed_count",
+            ),
             Stat(
                 "Number of cases with writ service performed by non-constables, and as a share "
                 "of all cases where writs have been issued.",
@@ -109,7 +144,12 @@ TOPICS: tuple[Topic, ...] = (
         "Appeals",
         "Unclear",
         (
-            Stat("Number and share of cases appealed", None),
+            Stat(
+                "Number and share of cases appealed",
+                "appealed_share",
+                percent=True,
+                count="appealed_count",
+            ),
             Stat("Average/median length of time from filing to judgment in appeals court", None),
             Stat(
                 "Average/median length of time from judgment in JP court to judgment in appeals "

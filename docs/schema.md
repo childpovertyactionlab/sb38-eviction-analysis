@@ -29,6 +29,7 @@ For the purpose of the analysis scripts, include every case filed in the specifi
 | `judgment_type_raw` | text | A raw outcome label to be mapped to a disposition class. |
 | `defendant_count` | integer | Number of named defendants. |
 | `citation_served_date` | date | Earliest date the citation was served on any defendant. |
+| `citation_server_type` | text | Who served the citation: `constable` or `other`. Leave empty where not recorded. |
 | `writ_issued_date` | date | Date a writ of possession was issued. |
 | `writ_executed_date` | date | Date the writ was executed. |
 | `appeal_date` | date | Date an appeal was recorded. |
