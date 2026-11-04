@@ -9,6 +9,10 @@ Rows are pulled into memory and nothing is written to disk. Querying needs CPAL'
 access and CPAL's analyst-pier helper; mapping a frame you already hold (``to_cases``) does
 not.
 
+The live tables change with every county delivery, so released figures read a frozen copy of
+the query result kept in CPAL's Databricks sandbox (``V1_0``). ``freeze`` makes such a copy
+inside Databricks; pass ``snapshot=None`` to read the live tables instead.
+
 The mapping from the county's outcome labels to disposition classes lives in
 ``config/dallas/disposition_map.csv``. It is exhaustive: an outcome pair missing from that file
 stops the run rather than falling into a default class.
@@ -69,6 +73,28 @@ LEFT JOIN (
     ON s.case_number = o.case_number
 WHERE o.date_filed BETWEEN :start AND :end
 """
+
+
+@dataclass(frozen=True)
+class Snapshot:
+    """A frozen copy of the query result, for cases filed from ``start`` to ``end``."""
+
+    table: str  # schema.table, in the workspace's sandbox catalog
+    taken: date
+    start: date
+    end: date
+
+    def covers(self, start: date, end: date) -> bool:
+        return self.start <= start and end <= self.end
+
+
+# Behind the v1.0 results. Wide enough for the RDD draft's seasons as well as the cohorts.
+V1_0 = Snapshot(
+    table="taylor.sb38_dallas_cases_20261104",
+    taken=date(2026, 11, 4),
+    start=date(2023, 4, 1),
+    end=date(2026, 5, 31),
+)
 
 
 @dataclass(frozen=True)
@@ -153,8 +179,7 @@ def to_cases(raw: pl.DataFrame, mapping: pl.DataFrame | None = None) -> pl.DataF
     ).sort("filed_date", "case_id")
 
 
-def fetch(start: date, end: date, *, role: str = "public") -> pl.DataFrame:
-    """Run the query through CPAL's Databricks helper and return the raw frame, in memory."""
+def _warehouse(role: str):
     try:
         from analyst_pier import Warehouse, load_config
     except ImportError as exc:  # pragma: no cover - only CPAL has the helper
@@ -164,13 +189,63 @@ def fetch(start: date, end: date, *, role: str = "public") -> pl.DataFrame:
             'analyst-pier.git@v0.1.0#subdirectory=python" ...'
         ) from exc
     workspace = load_config().workspace(role)
-    sql = SQL.format(gold=workspace.catalog("gold"), silver=workspace.catalog("silver"))
-    return Warehouse(workspace).query(sql, {"start": start, "end": end})
+    return Warehouse(workspace), workspace
 
 
-def load(start: date = date(2024, 1, 1), end: date = date(2026, 5, 31)) -> Pull:
+def _live_sql(workspace) -> str:
+    return SQL.format(gold=workspace.catalog("gold"), silver=workspace.catalog("silver"))
+
+
+def fetch(
+    start: date, end: date, *, role: str = "public", snapshot: Snapshot | None = V1_0
+) -> pl.DataFrame:
+    """Run the query through CPAL's Databricks helper and return the raw frame, in memory.
+
+    Reads ``snapshot`` when given, the live tables otherwise.
+    """
+    if snapshot is not None and not snapshot.covers(start, end):
+        raise ValueError(
+            f"{snapshot.table} holds cases filed {snapshot.start} to {snapshot.end}; "
+            f"asked for {start} to {end}. Pass snapshot=None to read the live tables."
+        )
+    warehouse, workspace = _warehouse(role)
+    if snapshot is None:
+        sql = _live_sql(workspace)
+    else:
+        sql = (
+            f"SELECT * FROM {workspace.catalog('sandbox')}.{snapshot.table} "
+            "WHERE date_filed BETWEEN :start AND :end"
+        )
+    return warehouse.query(sql, {"start": start, "end": end})
+
+
+def freeze(snapshot: Snapshot, *, role: str = "public") -> int:
+    """Copy the live query result into ``snapshot.table``. Returns the row count.
+
+    The copy is made inside Databricks, so no case row leaves it. An existing table is never
+    replaced.
+    """
+    warehouse, workspace = _warehouse(role)
+    target = f"{workspace.catalog('sandbox')}.{snapshot.table}"
+    comment = (
+        f"SB 38 analysis: Dallas case table for cases filed {snapshot.start} to {snapshot.end}, "
+        f"frozen {snapshot.taken} from the county outcome view and ORR silver tables"
+    )
+    warehouse.execute(
+        f"CREATE TABLE {target} COMMENT '{comment}' AS {_live_sql(workspace)}",
+        {"start": snapshot.start, "end": snapshot.end},
+    )
+    return warehouse.query(f"SELECT count(*) AS n FROM {target}").item()
+
+
+def load(
+    start: date = date(2024, 1, 1),
+    end: date = date(2026, 5, 31),
+    *,
+    snapshot: Snapshot | None = V1_0,
+) -> Pull:
     """Pull Dallas cases filed between ``start`` and ``end`` and return them in the schema."""
-    raw = fetch(start, end)
+    raw = fetch(start, end, snapshot=snapshot)
     cases = to_cases(raw)
     report = schema.validate(cases)
     if not report.ok:
@@ -189,7 +264,11 @@ STATE_FIPS, COUNTY_FIPS = "48", "113"
 
 
 def results(
-    start: date = date(2024, 1, 1), end: date = date(2026, 5, 31), *, with_coverage: bool = False
+    start: date = date(2024, 1, 1),
+    end: date = date(2026, 5, 31),
+    *,
+    with_coverage: bool = False,
+    snapshot: Snapshot | None = V1_0,
 ):
     """The results table for Dallas County: pull, fetch renter households, compute.
 
@@ -197,14 +276,14 @@ def results(
     """
     from sb38 import denominators, export, measures
 
-    pull = load(start, end)
+    pull = load(start, end, snapshot=snapshot)
     renters = denominators.fetch(STATE_FIPS, COUNTY_FIPS, measures.COHORT_YEARS)
     table = export.results(
         pull.cases,
         as_of=pull.as_of,
         county="Dallas",
         renters=renters,
-        pulled_on=date.today(),
+        pulled_on=snapshot.taken if snapshot is not None else date.today(),
         closures=pl.read_csv(CLOSURES, infer_schema=False),
     )
     if with_coverage:
@@ -222,8 +301,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "--coverage-out", help="where to write coverage by court (default: beside --out)"
     )
+    parser.add_argument(
+        "--live", action="store_true", help="read the live tables instead of the v1.0 snapshot"
+    )
     args = parser.parse_args()
-    table, cov = results(with_coverage=True)
+    table, cov = results(with_coverage=True, snapshot=None if args.live else V1_0)
     print(f"wrote {export.write(table, args.out)}: {table.height:,} rows")
     cov_out = args.coverage_out or str(args.out).removesuffix(".csv") + "-coverage.csv"
     print(f"wrote {export.write(cov, cov_out)}: {cov.height:,} rows")
