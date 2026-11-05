@@ -307,5 +307,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     table, cov = results(with_coverage=True, snapshot=None if args.live else V1_0)
     print(f"wrote {export.write(table, args.out)}: {table.height:,} rows")
-    cov_out = args.coverage_out or str(args.out).removesuffix(".csv") + "-coverage.csv"
+    cov_out = args.coverage_out or export.coverage_path(args.out)
     print(f"wrote {export.write(cov, cov_out)}: {cov.height:,} rows")

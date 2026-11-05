@@ -207,6 +207,12 @@ def coverage(cases: pl.DataFrame, *, as_of: date, county: str) -> pl.DataFrame:
     ).select(COVERAGE_COLUMNS)
 
 
+def coverage_path(results_path: str | Path) -> Path:
+    """Where the coverage table sits beside a results CSV: ``<name>-coverage.csv``."""
+    p = Path(results_path)
+    return p.with_name(f"{p.stem}-coverage.csv")
+
+
 def write(table: pl.DataFrame, path: str | Path) -> Path:
     """Write a results or coverage table to CSV.
 

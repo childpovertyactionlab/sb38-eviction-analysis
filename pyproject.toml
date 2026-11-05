@@ -19,6 +19,9 @@ dev = [
     "ruff>=0.8",
     "pre-commit>=3.7",
 ]
+tables = [
+    "xlsxwriter>=3.0",
+]
 
 [project.scripts]
 sb38 = "sb38.cli:main"
