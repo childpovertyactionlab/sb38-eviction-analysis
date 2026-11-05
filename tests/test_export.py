@@ -133,3 +133,9 @@ def test_closure_months_are_flagged(cases: pl.DataFrame) -> None:
         (pl.col("frame") == "month") & (pl.col("year") == 2026) & (pl.col("month") == 2)
     )
     assert not feb26.get_column("note").fill_null("").str.contains("Courts closed").any()
+
+    plain = export.results(cases, as_of=AS_OF, county="Synthetic")
+    as_text = [pl.all().cast(pl.Utf8)]
+    assert (
+        t.drop("note").select(as_text).equals(plain.drop("note").select(as_text))
+    ), "closure notes changed the row order"

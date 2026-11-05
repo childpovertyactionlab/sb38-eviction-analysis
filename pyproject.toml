@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sb38-eviction-analysis"
-version = "0.1.0"
+version = "1.0.0"
 description = "Methods and code for measuring how Texas SB 38 changed eviction case outcomes"
 readme = "README.md"
 license = { file = "LICENSE" }

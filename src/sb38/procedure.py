@@ -290,10 +290,19 @@ def appeals(cases: pl.DataFrame, cov: pl.DataFrame) -> pl.DataFrame:
 def all_measures(cases: pl.DataFrame) -> pl.DataFrame:
     """Every procedure measure the case table supports."""
     cov = coverage(cases)
-    return pl.concat(
-        [service(cases, cov), non_constable_service(cases), writs(cases, cov), appeals(cases, cov)],
-        how="diagonal_relaxed",
-    ).select(COLUMNS)
+    return (
+        pl.concat(
+            [
+                service(cases, cov),
+                non_constable_service(cases),
+                writs(cases, cov),
+                appeals(cases, cov),
+            ],
+            how="diagonal_relaxed",
+        )
+        .select(COLUMNS)
+        .sort("measure", "frame", "year", "month")
+    )
 
 
 def cut_date(year: int) -> date:
