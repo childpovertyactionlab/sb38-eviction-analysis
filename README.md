@@ -1,7 +1,5 @@
 # SB 38 Evictions Analysis
 
-> Draft version ... methods are still being settled on, so don't cite figures yet!
-
 This repo contains methods that measure how eviction cases changed after Texas Senate Bill 38 took effect for suits filed on or after January 1, 2026.
 
 ## Structure
@@ -24,6 +22,8 @@ uv run pytest
 
 To check data fit, export one row per case with the schema's column names and run `uv run sb38 validate <file>`.
 
+To lay out a results CSV as report tables, one sheet per topic, run `uv sync --extra tables` and then `uv run sb38 tables results/<county>.csv --out <county>.xlsx`.
+
 ## Layout
 
 | Path | Purpose |
@@ -32,7 +32,7 @@ To check data fit, export one row per case with the schema's column names and ru
 | `docs/schema.md` | Intended case table schema |
 | `config/` | Per-county settings, such as the Dallas disposition map |
 | `notebooks/` | Results notebooks, committed with outputs |
-| `results/` | Per-county analysis results, as CSV |
+| `results/` | Per-county analysis results, as CSV. Workbooks built from them are not committed. |
 | `src/sb38/` | Implemented codebase |
 | `fixtures/` | Invented test data from a seeded generator |
 | `tests/` | Tests, runnable without any real data |
