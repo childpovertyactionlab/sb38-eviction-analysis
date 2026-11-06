@@ -32,6 +32,9 @@ def _raw(rows: list[dict]) -> pl.DataFrame:
         "writ_issued_dt": None,
         "writ_served_dt": None,
         "appeal_date": None,
+        "citation_served_date": None,
+        "any_constable": None,
+        "any_other_server": None,
     }
     return pl.DataFrame(
         [{**base, **r} for r in rows],
@@ -43,6 +46,9 @@ def _raw(rows: list[dict]) -> pl.DataFrame:
             "writ_issued_dt": pl.Date,
             "writ_served_dt": pl.Date,
             "appeal_date": pl.Date,
+            "citation_served_date": pl.Date,
+            "any_constable": pl.Int32,
+            "any_other_server": pl.Int32,
         },
     )
 
@@ -134,8 +140,37 @@ def test_an_unmapped_outcome_pair_stops_the_run() -> None:
 def test_live_pull_matches_the_reconciled_cohorts() -> None:
     """Checked against the county delivery files on 2026-10-27. Filings move a little as the
     daily feed is corrected, so counts get a small tolerance; a bigger move needs explaining."""
-    pull = dallas.load(date(2024, 1, 1), date(2026, 5, 31))
+    pull = dallas.load(date(2024, 1, 1), date(2026, 5, 31), snapshot=None)
     f = measures.filings(pull.cases).filter(pl.col("frame") == "jan_may")
     got = dict(zip(f.get_column("year"), f.get_column("value"), strict=True))
     for year, expected in {2024: 20_184, 2025: 19_317, 2026: 19_024}.items():
         assert abs(got[year] - expected) / expected < 0.005, (year, got[year])
+
+
+@pytest.mark.integration
+@pytest.mark.skipif(
+    importlib.util.find_spec("analyst_pier") is None, reason="needs CPAL Databricks access"
+)
+def test_the_v1_snapshot_reproduces_the_released_counts() -> None:
+    pull = dallas.load()
+    assert pull.as_of == date(2026, 8, 26)
+    f = measures.filings(pull.cases).filter(pl.col("frame") == "jan_may")
+    got = dict(zip(f.get_column("year"), f.get_column("value"), strict=True))
+    assert got == {2024: 20_184, 2025: 19_317, 2026: 19_024}
+
+
+def test_a_snapshot_refuses_dates_it_does_not_hold() -> None:
+    with pytest.raises(ValueError, match="snapshot=None"):
+        dallas.fetch(date(2023, 1, 1), date(2026, 5, 31))
+
+
+def test_server_type_prefers_a_non_constable_server() -> None:
+    raw = _raw(
+        [
+            {"case_number": "S1", "any_constable": 1, "any_other_server": 0},
+            {"case_number": "S2", "any_constable": 1, "any_other_server": 1},
+            {"case_number": "S3", "any_constable": 0, "any_other_server": 0},
+        ]
+    )
+    got = dict(dallas.to_cases(raw).select("case_id", "citation_server_type").iter_rows())
+    assert got == {"S1": "constable", "S2": "other", "S3": None}

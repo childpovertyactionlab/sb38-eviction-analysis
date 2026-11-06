@@ -96,9 +96,53 @@ Case length reports calendar days from filing to disposition, in addition to:
 
 "Resolved" means any disposition including a judgment, a dismissal or a nonsuit, whichever ended the  case. Nonsuits and dismissals can end a case on a different clock.
 
+### Courts that record each step
+
+Courts don't record service, writs and appeals evenly. Some fill a field for nearly every
+case, others leave it empty, and some start or stop recording between years. A comparison
+across years is only fair on courts that recorded the field in every cohort year, so each
+figure below uses those courts and names them. Coverage by court and year is published beside
+the results, in `results/<county>-coverage.csv`.
+
+| Field | A court is used if, in every cohort year, |
+|---|---|
+| Service of the citation | at least 80% of its filed cases have a service date |
+| Writ execution | at least 40% of its writs issued by June 9 have an execution date by June 9 |
+| Appeals | at least 1% of its filed cases have an appeal recorded by June 9 |
+
+Appeals are rare, so the appeals test only separates courts that record appeals from courts
+that record almost none.
+
+### Service of the citation
+
+Average and median calendar days from filing to the earliest service of the citation on any
+defendant, among cases with a service date, on courts that record service every year.
+
+The share served by someone other than a constable is taken over cases with a recorded server
+type. Dallas County records server type only from mid-2025, so there is no pre-SB 38
+comparison for Dallas.
+
+### Writs of possession
+
+- Days from judgment to writ issuance: every court, cases that ended in a judgment.
+- Days from judgment to writ execution, and from issuance to execution: courts that record
+  execution every year.
+- Number and share of all cases filed in the cohort with a recorded writ execution: the same
+  courts.
+
+All writ events follow the June 9 rule below. What Dallas County records as the execution date
+has not been confirmed with the court. Who executed a writ isn't recorded, so writ service by
+non-constables isn't reported.
+
+### Appeals
+
+Number and share of cases filed in the cohort with an appeal recorded by June 9, on courts that
+record appeals every year. Time spent in the appeals court is in the County Court at Law's
+records, which this analysis doesn't hold.
+
 ## Events after judgment
 
-This rule applies to topics still under assessment. It is stated here because it decides
+This rule applies to the writ and appeal figures above. It is stated here because it decides
 whether cohorts can be compared at all.
 
 Writs of possession and appeals come after judgment, so a case filed in the window can have its
@@ -118,20 +162,21 @@ figures comparable with Dallas.
 ## Known disruptions
 
 - **Winter Storm Fern:** Some courts closed in late January 2026, around January 26–28. Filings for that week, and the timing of cases filed in the weeks before it, are affected. January 2026 figures are flagged.
+- **January 2025 winter storm:** Courts closed January 9–10, 2025. January 2025 figures are
+  flagged the same way.
 - **Holidays:** Court holidays fall on different weekdays each year, which affects month-by-month comparisons of timing.
 
 ## TBD (Under construction)
 
 - Summary disposition requests
-- Service of the citation
 - Immediate possession bonds
-- Writ issuance and execution
-- Appeals
 - Notice to pay rent or vacate
 
 ## Applying this method to a new county
 
 1. Write an adapter script that produces the case table in [`schema.md`](schema.md).
 2. Map the county's outcome labels onto the five disposition classes in `config/<county>/`.
-3. Record the date the data were pulled.
-4. Check the table with `sb38 validate <file>`.
+3. List the days the county's courts were closed in `config/<county>/closures.csv` (date,
+   event, confirmed), so the affected months are flagged.
+4. Record the date the data were pulled.
+5. Check the table with `sb38 validate <file>`.

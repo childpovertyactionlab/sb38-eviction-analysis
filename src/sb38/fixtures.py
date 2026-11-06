@@ -26,6 +26,7 @@ _MIX = (
 assert {name for name, _ in _MIX} == set(DISPOSITION_CLASSES)
 
 _COURTS = ("Court A", "Court B", "Court C", "Court D", "Court E")
+_SERVICE_COURTS = ("Court A", "Court B")
 
 
 def synthetic_cases(
@@ -38,6 +39,8 @@ def synthetic_cases(
 ) -> pl.DataFrame:
     """Return ``n`` invented cases filed between ``start`` and ``end``, observed to ``as_of``."""
     rng = random.Random(seed)
+    # A second stream for fields added later, so adding one never changes the others.
+    extra = random.Random(seed + 1)
     span = (end - start).days
     classes = [name for name, _ in _MIX]
     weights = [w for _, w in _MIX]
@@ -80,6 +83,18 @@ def synthetic_cases(
                 "writ_executed_date": executed,
                 "appeal_date": appeal,
             }
+        )
+        row = rows[-1]
+        # Two courts record service of the citation for nearly every case, so the measures
+        # that need a court recording it every year have something to work on.
+        if row["court"] in _SERVICE_COURTS and served is None and extra.random() < 0.85:
+            row["citation_served_date"] = filed + timedelta(days=extra.randint(1, 12))
+        # Server type is recorded only from 2026 on, and is nearly always a constable.
+        u = extra.random()
+        row["citation_server_type"] = (
+            ("other" if u < 0.01 else "constable")
+            if row["citation_served_date"] and filed.year >= 2026
+            else None
         )
     return pl.DataFrame(rows).sort("filed_date")
 

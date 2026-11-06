@@ -63,6 +63,13 @@ FIELDS: tuple[Field, ...] = (
     Field("judgment_type_raw", pl.Utf8, False, True, "The county's own outcome label, unmapped."),
     Field("defendant_count", pl.Int64, False, True, "Number of named defendants."),
     Field("citation_served_date", pl.Date, False, True, "Earliest service of the citation."),
+    Field(
+        "citation_server_type",
+        pl.Utf8,
+        False,
+        True,
+        "Who served the citation: constable or other. Empty where not recorded.",
+    ),
     Field("writ_issued_date", pl.Date, False, True, "Date a writ of possession was issued."),
     Field("writ_executed_date", pl.Date, False, True, "Date the writ was executed."),
     Field("appeal_date", pl.Date, False, True, "Date an appeal was recorded."),

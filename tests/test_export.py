@@ -8,7 +8,7 @@ from pathlib import Path
 import polars as pl
 import pytest
 
-from sb38 import cli, export, measures, schema, scope
+from sb38 import cli, export, measures, procedure, schema, scope
 from sb38.fixtures import synthetic_cases
 
 AS_OF = date(2026, 8, 26)
@@ -30,7 +30,9 @@ def cases() -> pl.DataFrame:
 
 
 def test_every_measure_named_in_scope_exists(cases: pl.DataFrame) -> None:
-    computed = set(measures.all_measures(cases, as_of=AS_OF).get_column("measure"))
+    computed = set(measures.all_measures(cases, as_of=AS_OF).get_column("measure")) | set(
+        procedure.all_measures(cases).get_column("measure")
+    )
     for _, stat in scope.computed():
         assert stat.measure == "filing_rate" or stat.measure in computed, stat.measure
 
@@ -94,6 +96,8 @@ def test_the_command_end_to_end(tmp_path: Path) -> None:
     assert rc == 0
     back = pl.read_csv(out)
     assert back.columns == export.COLUMNS
+    cov = pl.read_csv(tmp_path / "results-coverage.csv")
+    assert cov.columns == export.COVERAGE_COLUMNS
     assert set(back.get_column("county")) == {"Synthetic"}
 
 
@@ -102,3 +106,36 @@ def test_pull_date_defaults_to_the_data_date(cases: pl.DataFrame) -> None:
     assert set(t.get_column("pulled_on")) == {AS_OF}
     later = export.results(cases, as_of=AS_OF, county="Synthetic", pulled_on=date(2026, 10, 29))
     assert set(later.get_column("pulled_on")) == {date(2026, 10, 29)}
+
+
+def test_closure_months_are_flagged(cases: pl.DataFrame) -> None:
+    closures = pl.DataFrame(
+        {
+            "date": ["2026-01-26", "2026-01-27", "2025-01-09"],
+            "event": ["Storm", "Storm", "Other storm"],
+            "confirmed": ["no", "no", "yes"],
+        }
+    )
+    t = export.results(cases, as_of=AS_OF, county="Synthetic", closures=closures)
+    jan26 = t.filter(
+        (pl.col("frame") == "month") & (pl.col("year") == 2026) & (pl.col("month") == 1)
+    )
+    assert (
+        jan26.get_column("note")
+        .str.contains("Courts closed 2026-01-26 to 2026-01-27 \\(Storm; dates unconfirmed\\)")
+        .all()
+    )
+    jan25 = t.filter(
+        (pl.col("frame") == "month") & (pl.col("year") == 2025) & (pl.col("month") == 1)
+    )
+    assert jan25.get_column("note").str.contains("Courts closed 2025-01-09 \\(Other storm\\)").all()
+    feb26 = t.filter(
+        (pl.col("frame") == "month") & (pl.col("year") == 2026) & (pl.col("month") == 2)
+    )
+    assert not feb26.get_column("note").fill_null("").str.contains("Courts closed").any()
+
+    plain = export.results(cases, as_of=AS_OF, county="Synthetic")
+    as_text = [pl.all().cast(pl.Utf8)]
+    assert (
+        t.drop("note").select(as_text).equals(plain.drop("note").select(as_text))
+    ), "closure notes changed the row order"

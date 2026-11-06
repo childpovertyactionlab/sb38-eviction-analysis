@@ -37,8 +37,13 @@ def table(measures: pl.DataFrame, measure: str, *, percent: bool = False) -> pl.
             if percent:
                 changes.append((diff * 100).round(1).alias(f"pts vs {b}"))
             else:
+                # A percent change from zero has no meaning, so it's left blank.
                 changes.append(
-                    ((pl.col(str(TREATED)) / pl.col(str(b)) - 1) * 100).round(1).alias(f"% vs {b}")
+                    pl.when(pl.col(str(b)) == 0)
+                    .then(None)
+                    .otherwise((pl.col(str(TREATED)) / pl.col(str(b)) - 1) * 100)
+                    .round(1)
+                    .alias(f"% vs {b}")
                 )
     counts = not percent and all(
         v is None or float(v).is_integer() for y in years for v in wide.get_column(y).to_list()
@@ -90,3 +95,26 @@ def topic(results: pl.DataFrame, t: scope.Topic) -> None:
                 print(table(sub, s.measure))
         else:
             print(table(rows, s.measure, percent=s.percent))
+            if s.count:
+                print(table(rows, s.count))
+        notes = rows.filter(pl.col("measure") == s.measure).get_column("note").drop_nulls()
+        for part in sorted({p for note in notes for p in note.split(" | ") if p}):
+            print(part)
+
+
+def coverage(cov: pl.DataFrame, field: str) -> pl.DataFrame:
+    """Share of ``field`` recorded by court and year, and whether the court is used."""
+    df = cov.filter(pl.col("field") == field)
+    wide = df.pivot(on="year", index=["court", "recording"], values="share")
+    years = sorted(c for c in wide.columns if c.isdigit())
+    return wide.select(
+        "court",
+        *[(pl.col(y) * 100).round(1).alias(y) for y in years],
+        pl.when(pl.col("recording")).then(pl.lit("yes")).otherwise(pl.lit("")).alias("used"),
+    ).sort("court")
+
+
+def print_coverage(cov: pl.DataFrame, field: str) -> None:
+    """Print the coverage table for ``field`` under its heading."""
+    print("\nShare recorded by court and year (%)")
+    print(coverage(cov, field))
