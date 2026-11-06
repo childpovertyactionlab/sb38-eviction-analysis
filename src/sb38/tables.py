@@ -126,8 +126,24 @@ def sheets(
     return out
 
 
-def write(results: pl.DataFrame, path: str | Path, coverage: pl.DataFrame | None = None) -> Path:
-    """Write the tables to an Excel workbook at ``path``."""
+def _first_width(blocks: list[Block]) -> int:
+    """Column A wide enough for the longest table label, at least 24 and at most 50."""
+    labels = [
+        len(str(v))
+        for b in blocks
+        if b.table is not None and b.table.width
+        for v in b.table.to_series(0).to_list()
+    ]
+    return min(50, max([24, *labels]))
+
+
+def write(
+    results: pl.DataFrame,
+    path: str | Path,
+    coverage: pl.DataFrame | None = None,
+    extra: list[tuple[str, list[Block]]] | None = None,
+) -> Path:
+    """Write the tables to an Excel workbook at ``path``, with any ``extra`` sheets last."""
     try:
         import xlsxwriter
     except ImportError as exc:  # pragma: no cover - optional extra
@@ -140,9 +156,9 @@ def write(results: pl.DataFrame, path: str | Path, coverage: pl.DataFrame | None
     wb = xlsxwriter.Workbook(str(path))
     bold = wb.add_format({"bold": True})
     head = wb.add_format({"bold": True, "bottom": 1})
-    for name, blocks in sheets(results, coverage):
+    for name, blocks in [*sheets(results, coverage), *(extra or [])]:
         ws = wb.add_worksheet(name)
-        ws.set_column(0, 0, 24)
+        ws.set_column(0, 0, _first_width(blocks))
         ws.set_column(1, 8, 12)
         r = 0
         for b in blocks:

@@ -23,10 +23,15 @@ def run(
 ) -> dict[str, pl.DataFrame]:
     """The seasonal difference and its checks, the event study, and the discontinuity check.
 
-    Exploratory outcomes stay off until the writ and appeal field definitions are confirmed.
+    Exploratory outcomes stay off until the writ and appeal field definitions are confirmed. The
+    case-mix check needs defendant counts and comes back empty for a table without them.
     """
     oc = case_outcomes(cases, as_of=as_of, closures=closures)
     outcomes = PRIMARY + SECONDARY + (EXPLORATORY if exploratory else ())
+    has_defendants = (
+        "defendant_count" in cases.columns
+        and cases.get_column("defendant_count").drop_nulls().len()
+    )
 
     rd_dates = checks.clear_dates(PLACEBO_START, PLACEBO_END, h=BANDWIDTH, closures=closures)
     rd_placebo = []
@@ -45,7 +50,7 @@ def run(
         "sensitivity": seasonal.sensitivity(oc, closures=closures),
         "placebo_season": seasonal.placebo_season(oc),
         "filing_volume": seasonal.filing_volume(cases, closures=closures),
-        "composition": seasonal.composition(oc),
+        "composition": seasonal.composition(oc) if has_defendants else pl.DataFrame(),
         "event_study": pl.concat([eventstudy.event_study(oc, o) for o in PRIMARY]),
         "weekly_means": pl.concat([seasonal.weekly_means(oc, o) for o in PRIMARY]),
         "rd_check": estimate.estimates(oc, PRIMARY),
