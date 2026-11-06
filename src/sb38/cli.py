@@ -3,6 +3,7 @@
 ``sb38 validate <file>`` checks a case table against the schema.
 ``sb38 measures <file> --as-of DATE --county NAME --out PATH`` writes the results CSV, and
 coverage by court beside it.
+``sb38 tables <results.csv> --out PATH`` lays the results out as report tables in a workbook.
 """
 
 from __future__ import annotations
@@ -13,7 +14,7 @@ from datetime import date
 
 import polars as pl
 
-from sb38 import denominators, export, measures, schema
+from sb38 import denominators, export, measures, schema, tables
 
 
 def _validate(path: str) -> int:
@@ -56,12 +57,25 @@ def _measures(args: argparse.Namespace) -> int:
     out = export.write(table, args.out)
     cov = export.coverage(cases, as_of=date.fromisoformat(args.as_of), county=args.county)
     if cov.height:
-        cov_out = export.write(cov, str(args.out).removesuffix(".csv") + "-coverage.csv")
+        cov_out = export.write(cov, export.coverage_path(args.out))
         print(f"wrote {cov_out}: {cov.height:,} rows")
     done = table.filter(table["status"] == "computed").get_column("stat").n_unique()
     print(
         f"wrote {out}: {table.height:,} rows, {done} of {table.get_column('stat').n_unique()} stats computed"
     )
+    return 0
+
+
+def _tables(args: argparse.Namespace) -> int:
+    results = pl.read_csv(args.results)
+    # A coverage file named on the command line has to exist; the default one is optional.
+    if args.coverage:
+        coverage = pl.read_csv(args.coverage)
+    else:
+        default = export.coverage_path(args.results)
+        coverage = pl.read_csv(default) if default.exists() else None
+    out = tables.write(results, args.out, coverage)
+    print(f"wrote {out}")
     return 0
 
 
@@ -80,7 +94,13 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--census-state", help="state FIPS for the filing-rate denominator, e.g. 48")
     m.add_argument("--census-county", help="county FIPS for the denominator, e.g. 113")
     m.add_argument("--closures", help="CSV of court-closure days (date, event, confirmed)")
+    t = sub.add_parser("tables", help="lay out a results CSV as report tables in a workbook")
+    t.add_argument("results", help="results CSV from `sb38 measures`, e.g. results/<county>.csv")
+    t.add_argument("--coverage", help="coverage CSV (default: beside the results CSV, if there)")
+    t.add_argument("--out", required=True, help="where to write the workbook, e.g. <county>.xlsx")
     args = parser.parse_args(argv)
+    if args.command == "tables":
+        return _tables(args)
     if args.command == "validate":
         return _validate(args.path)
     if args.command == "measures":
