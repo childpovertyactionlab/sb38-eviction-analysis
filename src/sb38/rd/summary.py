@@ -60,8 +60,7 @@ ABOUT = (
     "filed. Cases filed on a court-closure day are left out.",
     "Holm-adjusted p-values cover the four primary outcomes, the first four rows. A change "
     "smaller than the smallest detectable change can't be told apart from no change.",
-    "The analysis plan is docs/rdd/analysis-plan.md on the RDD branch of the "
-    "sb38-eviction-analysis repository.",
+    "The analysis plan is docs/rdd/analysis-plan.md in the sb38-eviction-analysis repository.",
 )
 PRE_JANUARY = (
     "A joint test of the weeks before December 11. A small p means the season was already "

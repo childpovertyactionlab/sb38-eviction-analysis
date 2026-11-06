@@ -24,6 +24,10 @@ To check data fit, export one row per case with the schema's column names and ru
 
 To lay out a results CSV as report tables, one sheet per topic, run `uv sync --extra tables` and then `uv run sb38 tables results/<county>.csv --out <county>.xlsx`.
 
+## Statistical comparison (draft)
+
+The regression discontinuity prototype tests whether changes after January 1, 2026 are larger than ordinary movement from one season to the next. It needs a case table with filings from June 1, 2023 through May 31, 2026. To add its estimates to the workbook, run `uv sync --extra rdd --extra tables`, then `uv run sb38 rd <file> --as-of <date> --closures config/<county>/closures.csv --out <county>-rd.csv`, then `uv run sb38 tables results/<county>.csv --rd <county>-rd.csv --out <county>.xlsx`. `--as-of` is the date the data were pulled, and the closures file lists court-closure days in the format of `config/dallas/closures.csv`. The estimates are a draft until they have had their quality check. The method is in `docs/rdd/analysis-plan.md`.
+
 ## Layout
 
 | Path | Purpose |

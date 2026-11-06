@@ -1,9 +1,10 @@
 # SB 38 effects prototype: analysis plan (Dallas County)
 
-> **Draft prototype.** This is not part of the partner method in `docs/methods.md`, and nothing
-> here is for citation. The plan is committed before any estimate is run on Dallas data.
-> Revisions made before that point are listed at the end. Changes made after the first
-> estimate are logged under "Deviations" with a date and a reason.
+> **Draft prototype.** Any county can run it on its own case table (`sb38 rd`), but it is not
+> part of the partner method in `docs/methods.md`, and nothing here is for citation until the
+> estimates have had their quality check. The plan was committed before any estimate was run on
+> Dallas data. Revisions made before that point are listed at the end. Changes made after the
+> first estimate are logged under "Deviations" with a date and a reason.
 
 ## Question
 
@@ -155,3 +156,7 @@ running anything on Dallas data.
   index varies only with the number of defendants, so it repeated the defendant-count result.
   It is also run without court indicators, so a shift in court mix would show. Both runs are
   reported.
+- **2026-11-06, case mix without defendant counts.** The predicted-outcome index is built from
+  court and number of defendants, so a county without defendant counts can't run the check. It
+  is skipped for that county and reported as not computed. Dallas has defendant counts, so its
+  estimates are unchanged.
