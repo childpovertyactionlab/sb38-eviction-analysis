@@ -30,6 +30,7 @@ To lay out a results CSV as report tables, one sheet per topic, run `uv sync --e
 |---|---|
 | `docs/methods.md` | Methods explainer |
 | `docs/schema.md` | Intended case table schema |
+| `docs/rdd/` | Analysis plan for the regression discontinuity prototype, committed before any estimate was run |
 | `config/` | Per-county settings, such as the Dallas disposition map |
 | `notebooks/` | Results notebooks, committed with outputs |
 | `results/` | Per-county analysis results, as CSV. Workbooks built from them are not committed. |
