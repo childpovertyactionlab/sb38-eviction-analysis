@@ -1,7 +1,5 @@
 # SB 38 Evictions Analysis
 
-> Draft version ... methods are still being settled on, so don't cite figures yet!
-
 This repo contains methods that measure how eviction cases changed after Texas Senate Bill 38 took effect for suits filed on or after January 1, 2026.
 
 ## Structure
