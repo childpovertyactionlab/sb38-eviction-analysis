@@ -44,7 +44,7 @@ decided in January 2026 belongs to 2025.
 Changes are reported against each benchmark year separately (2026 against 2025, and 2026 against 2024).
 
 These are counts of every case, so the figures carry no sampling error, and
-differences are reported as observed. Whether a change is larger than normal year-to-year movement is a separate question, left unanswered as of now.
+differences are reported as observed. Whether a change is larger than normal year-to-year movement is a separate question, which the regression discontinuity prototype in `docs/rdd/analysis-plan.md` takes up. Its estimates are a draft until they have had their quality check.
 
 ## Date cut-offs
 
