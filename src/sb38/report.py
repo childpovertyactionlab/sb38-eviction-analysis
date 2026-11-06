@@ -66,6 +66,21 @@ def denominators_used(measures: pl.DataFrame, measure: str) -> pl.DataFrame:
     )
 
 
+def note_parts(rows: pl.DataFrame, measure: str) -> list[str]:
+    """The distinct notes on a measure's rows, each " | "-joined note split into its parts."""
+    notes = rows.filter(pl.col("measure") == measure).get_column("note").drop_nulls()
+    return sorted({p for note in notes for p in note.split(" | ") if p})
+
+
+def source_label(rows: pl.DataFrame) -> str:
+    """The ACS source of one denominator source's filing-rate rows, naming carried-forward years."""
+    carried = rows.filter(pl.col("carried_forward")).get_column("year").unique().sort()
+    label = "ACS 1-year" if rows.get_column("denominator_source")[0] == "acs1" else "ACS 5-year"
+    if carried.len():
+        return f"{label} (estimate carried forward for {', '.join(map(str, carried.to_list()))})"
+    return label
+
+
 def topic(results: pl.DataFrame, t: scope.Topic) -> None:
     """Print one scoping-document topic: its own wording, then each stat's table.
 
@@ -84,21 +99,13 @@ def topic(results: pl.DataFrame, t: scope.Topic) -> None:
         if s.measure == "filing_rate":
             for source in rows.get_column("denominator_source").unique().sort().to_list():
                 sub = rows.filter(pl.col("denominator_source") == source)
-                carried = sub.filter(pl.col("carried_forward")).get_column("year").unique().sort()
-                label = "ACS 1-year" if source == "acs1" else "ACS 5-year"
-                suffix = (
-                    f" (estimate carried forward for {', '.join(map(str, carried.to_list()))})"
-                    if carried.len()
-                    else ""
-                )
-                print(f"{label}{suffix}")
+                print(source_label(sub))
                 print(table(sub, s.measure))
         else:
             print(table(rows, s.measure, percent=s.percent))
             if s.count:
                 print(table(rows, s.count))
-        notes = rows.filter(pl.col("measure") == s.measure).get_column("note").drop_nulls()
-        for part in sorted({p for note in notes for p in note.split(" | ") if p}):
+        for part in note_parts(rows, s.measure):
             print(part)
 
 

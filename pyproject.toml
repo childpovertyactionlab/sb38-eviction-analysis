@@ -23,6 +23,9 @@ rdd = [
     "rdrobust>=2.1.1",
     "statsmodels>=0.14.4",
 ]
+tables = [
+    "xlsxwriter>=3.0",
+]
 
 [project.scripts]
 sb38 = "sb38.cli:main"
