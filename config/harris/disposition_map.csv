@@ -1,0 +1,17 @@
+disposition,judgment_title,disposition_class,note
+Default Judgment (OCA),,default_judgment,Tenant did not appear; judgment for the landlord.
+Trial or Hearing by Judge (OCA),,other_judgment,
+Trial by Jury (OCA),,other_judgment,
+Agreed Judgment (OCA),,other_judgment,
+Dismissed for Want of Prosecution (OCA),,dismissed,
+Disp at Trial-Dismissed by Prosecution (OCA),,dismissed,
+Non-suited or Dismissed by Plaintiff (OCA),,nonsuit,Withdrawn by the landlord.
+All Other Dispositions (OCA),,other,
+All Other Dispositions Except Dismissal (OCA),,other,
+Transfer Case (OCA),,other,
+Judgment Set Aside,,other,Records a later event rather than how the case ended.
+Appeal Filed,Default Judgment,default_judgment,"The case page shows only the appeal as the disposition, but its Judgments section keeps the justice court judgment, which is what the case ended with in that court."
+Appeal Filed,Final Judgment,other_judgment,Same as above: the justice court judgment kept on the case page.
+Appeal Filed,Agreed Judgment,other_judgment,Same as above: the justice court judgment kept on the case page.
+Appeal Filed,Summary Disposition,other_judgment,"Same as above. A granted SB 38 summary disposition, a judgment on a motion."
+Appeal Filed,,other,An appeal with no justice court judgment on the case page. 27 cases in Jan-May 2024-2026.
